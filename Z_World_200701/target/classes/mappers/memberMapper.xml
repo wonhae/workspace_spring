@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="m.e.m"> <!-- namespace 가 하나의 폴더나 패키지 역할을 한다. --> <!-- sql문 여기서 관리한다!! -->
+	<!-- dao 쪽에서 id 값만 가져와 사용한다. 만약 이름이 같으면 에러. 독특하게 짓기 짜증나서 mapper에 namespace 
+		넣어주는것 -->
+
+	<insert id="insert">
+		insert into member(id,name,age) values (#{id},#{name},#{age})
+
+	</insert>
+
+
+	<select id="list" resultType="MemberDTO">  <!--resultType 반환형이 들어간다.   -->
+		select * from member <!-- list가 아니라 제네릭 타입으로만 받게 되어있다. -->
+	</select>
+	
+	<select id="read" resultType="Memberdto">
+		select * from member where id = #{id}
+	</select>
+</mapper>
