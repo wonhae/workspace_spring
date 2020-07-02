@@ -34,6 +34,12 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO read(String id) {
 		return session.selectOne(NS + ".read", id);
 	}
+
+	@Override
+	public MemberDTO updateui(String id) {
+		
+		return session.selectOne(NS+"m.e.m", id);
+	}
 	
 	
 }

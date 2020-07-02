@@ -12,4 +12,6 @@ public interface MemberDAO {
 
 	MemberDTO read(String id);
 
+	MemberDTO updateui(String id);
+
 }

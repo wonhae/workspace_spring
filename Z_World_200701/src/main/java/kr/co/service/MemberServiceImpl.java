@@ -33,5 +33,11 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDTO read(String id) {
 		return memberDAO.read(id);
 	}
+
+	@Override
+	public MemberDTO updateui(String id) {
+		
+		return memberDAO.updateui(id);
+	}
 	
 }

@@ -12,4 +12,6 @@ public interface MemberService {
 
 	MemberDTO read(String id);
 
+	MemberDTO updateui(String id);
+
 }

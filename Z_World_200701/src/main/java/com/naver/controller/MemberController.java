@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,6 +19,17 @@ public class MemberController {
 	
 	@Autowired   // or Inject/ 스프링컨테이너가 가지고 있는거 곧바로 받으려면.. 단위테스트할때 본 것 
 	private MemberService memberService;  //spring은 인터페이스 기반. 1. 인터페이스 먼저 만들고 그걸 구현하는 2. 그걸 구현하는 클래스 만들기. ->autowired 들어갔기때문에 어딘가 객체 만들어져있음. 이 타입에 맞는 객체가 하나 있어야한다.
+	
+	
+	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
+	public String updateui(@PathVariable("id") String id, Model model) {
+		MemberDTO dto = memberService.updateui(id);
+		
+		model.addAttribute("dto", dto);
+		
+		return "member/update";
+	}
+	
 	
 	@RequestMapping(value="/read", method=RequestMethod.GET)
 	public void read(String id, Model model) {
