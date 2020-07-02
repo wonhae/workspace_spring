@@ -1,37 +1,40 @@
 package kr.co.ca;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import kr.co.domain.MemberDTO;
 
 @Controller
 public class TestController {
-
 	
-	@RequestMapping("t5")
-	public void t5(@ModelAttribute("d4") String str) {
-		System.out.println(str);
+	@ RequestMapping(value="rt4", method = RequestMethod.GET)
+	public void rt4(Model model) {
+		List<MemberDTO> list = new ArrayList<MemberDTO>();
+		list.add(new MemberDTO("m001", "kim", 33));
+		list.add(new MemberDTO("m002", "lee", 34));
+		list.add(new MemberDTO("m003", "park", 35));
+		model.addAttribute("list", list); // 일반컨트롤러에서 작업했던 것 중 <% 넣었던것. 거기에 안넣고 여기에 넣음 
 	}
 	
-	@RequestMapping("t4")
-	public String t4(RedirectAttributes rtts) {
-		rtts.addFlashAttribute("d4", "d4who");
-		return "redirect:/t5";
+	@RequestMapping(value="rt3", method = RequestMethod.GET)
+	public void rt3() {
+		
 	}
 	
-	
-	@RequestMapping("t2")
-	public String t2(Model model) {
-		model.addAttribute("d2", "d2what");
-		return "redirect:/t3";
+	@RequestMapping(value="rt2", method= RequestMethod.GET)
+	public void rt2() {
+		
 	}
 	
-	@RequestMapping("t1")
-	public String t1(Model model) {
-		model.addAttribute("dd", "dddddd");
-		return "t1";
+	@RequestMapping(value="/rt1")
+	public void rt1() {
+		
 	}
 	
 }

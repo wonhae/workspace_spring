@@ -17,11 +17,38 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<button id="btn">at3 test</button>
+	<p class="name"></p>
 	
-	<c:forEach items="${list}" var="dto">
-		<a href="/member/read?id=${dto.id}">${dto.id}:${dto.name}</a>
-		<br>
-	</c:forEach>
 	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#btn').click(function(){
+				$.ajax({
+					type: 'post',
+					url: 'at3',
+					dataType: 'text',
+					data: {
+						'id' : 'm007',
+						'name' : 'lee',
+						'age' : 33	
+					},
+					success:function(result){
+						console.log(result);
+						/* 파싱해야한다 js가 오브젝트로 인식하게끔 */
+						var obj = JSON.parse(result);  		/* 객체 만들어  받는다 */
+						console.log(obj.id);				/* 객체 접근, dto와 상관없음 */
+						console.log(obj.name);     
+
+						$('.name').text(obj.name);  
+					},
+					error : function(request,status,error){
+						console.log(error);
+					}
+				});
+			});
+		});
+	</script>
+
 </body>
 </html>

@@ -17,6 +17,33 @@
 <title>Insert title here</title>
 </head>
 <body>
-	${d2}
+	<button>at2 test</button>
+	
+	<!--배열데이터 보내는것   -->
+	<script type="text/javascript">
+			var arr = ['hello', 'world', 'good', 'morning'];
+	
+		$(document).ready(function(){
+			$('button').click(function(){
+				$.ajax({
+					type: 'post',
+					url: 'at2',
+					traditional : true,
+					dataType: 'text',
+					data : {
+						'arr' : arr
+					},
+					success:function(result) {
+						console.log(result)	
+					},
+					error : function(request, status, error) {
+						console.log(error)
+					}			
+					
+				});				
+			});
+		});
+	</script>
+	
 </body>
 </html>
