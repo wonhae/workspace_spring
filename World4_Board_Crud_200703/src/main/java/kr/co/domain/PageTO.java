@@ -23,11 +23,11 @@ public class PageTO {
 		executeAll();
 	}
 	
-	public PageTO(int perPage) { //perpage 외부에서 변경시켜줌 ->startNum~stopPageNum잉 바뀜
-		super();
-		this.perPage = perPage;
+	public PageTO(int curPage) {
+		this.curPage = curPage;
 		executeAll();
 	}
+
 	
 //getset  ->독립변수는 바꿔줌 setmethod에 executeall method호출  //////
 	public int getCurPage() {
