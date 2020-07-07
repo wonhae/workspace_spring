@@ -21,7 +21,6 @@ public class MyRestController {
 	
 	@RequestMapping(value="/replies", method=RequestMethod.DELETE)
 	public String delete(@RequestBody ReplyVO vo) {
-		System.out.println("sfdwfdjwfo");
 		int i = rService.delete(vo.getRno());
 		if(i == 1) {
 			return "success";

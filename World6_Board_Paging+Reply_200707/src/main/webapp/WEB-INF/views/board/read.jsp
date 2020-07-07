@@ -126,13 +126,12 @@
 	<!-- ******************자바스크립트******************-->
 	<script type="text/javascript">
 		
-		var bno =${vo.bno};  /* 전역변수! scrip 어디서든 사용가능/ (지역변수: 해당 함수 안에서 사용가능! ) vo.bno는 boardcontroller에서 가져옴!  */  
+		var bno =${vo.bno};  /* 전역변수! script 어디서든 사용가능/ (지역변수: 해당 함수 안에서 사용가능! ) vo.bno는 boardcontroller에서 가져옴!  */  
 
 		getList(bno);  /* 7/7 댓글 무조건 실행되게! */
 
 		$(document).ready(function(){
-
-			
+		
 			/* 삭제! */
 			$('#replies').on("click",".replydelete",function(){
 				var rno = $(this).attr("data-rno");				
@@ -162,7 +161,7 @@
 			});
 
 
-			/* 수정버튼 클릭시 ajax(수정이니까 put) 통신하여 rno, replytext 넘어간다!  */   ////////////
+			/* 수정버튼 클릭시 ajax(수정이니까 put) 통신하여 rno, replytext 넘어간다!  */   
 			$('.modal-update').click(function(){
 				var rno = $('.modal-rno').text();
 				var replytext = $('.modal-replytext').val();
@@ -234,8 +233,10 @@
 					}									
 				});
 			});
-
-			$('#reply_form').click(function(){   /* 이걸누르면 댓글 다는 mycollapse 폼 열렸다가 닫혔다가! */
+			
+			
+			/* 이걸누르면 댓글 다는 mycollapse 폼 열렸다가 닫혔다가! */
+			$('#reply_form').click(function(){   
 				$('#myCollapse').collapse("toggle");
 			});
 
