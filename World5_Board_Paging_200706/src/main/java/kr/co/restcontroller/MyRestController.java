@@ -23,7 +23,7 @@ public class MyRestController {
 	
 	
 	
-	@RequestMapping(value="/replies/all{bno}", method = RequestMethod.GET)  //url 주의깊게 보세요! 이런식으로 통신해야함! 
+	@RequestMapping(value="/replies/all/{bno}", method = RequestMethod.GET)  //url 주의깊게 보세요! 이런식으로 통신해야함! 
 	public List<ReplyVO> list(@PathVariable("bno") int bno){
 		List<ReplyVO> list = rService.list(bno);
 		return list;

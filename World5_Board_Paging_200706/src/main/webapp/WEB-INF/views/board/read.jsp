@@ -75,6 +75,11 @@
 	
 	<script type="text/javascript">
 		var bno =${vo.bno};  /* 전역변수! scrip 어디서든 사용가능/ (지역변수: 해당 함수 안에서 사용가능! ) */
+
+
+		getList(bno);  /* 댓글 무조건 실행되게! */
+
+		
 	
 		$(document).ready(function(){
 
@@ -125,6 +130,15 @@
 				location.assign("/board/list")
 			});
 		});
+
+		/* 댓글보기. db 들려야  */
+		function getList(bno){  //글 자세히 보기 클릭했을때, 댓글 목록도 자동으로 나오도록~~ 
+			$.getJSON("/replies/all/"+bno, function(data){
+				console.log(data);
+			});
+		}
+
+		
 	</script>
 
 
