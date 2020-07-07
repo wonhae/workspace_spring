@@ -27,6 +27,16 @@ public class ReplyDAOImpl implements ReplyDAO {
 	public List<ReplyVO> list(int bno) {
 		return session.selectList(NS+".list", bno);
 	}
+
+	@Override
+	public int update(ReplyVO vo) {
+		return session.update(NS+".update", vo);
+	}
+
+	@Override
+	public int delete(int rno) {
+		return session.delete(NS+".delete",rno);
+	}
 	
 	
 

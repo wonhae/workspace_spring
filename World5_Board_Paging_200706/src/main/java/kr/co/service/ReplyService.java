@@ -10,4 +10,8 @@ public interface ReplyService {
 	
 	List<ReplyVO> list(int bno);
 
+	int update(ReplyVO vo);
+
+	int delete(int rno);
+
 }
