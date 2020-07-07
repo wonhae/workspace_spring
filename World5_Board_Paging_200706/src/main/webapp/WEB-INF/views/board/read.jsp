@@ -82,8 +82,31 @@
 				
 				var replyer = $('#replyer').val();
 				var replytext = $('#replytext').val();
-				console.log(replyer);
-				console.log(replytext)
+
+				/* 7/7일 댓글 ajax  총3개 보냄 *//* board가 없다. 그냥 replies 만 있다. restcontroller로 구현할 것이기 때문에 */
+				$.ajax({
+					type: 'post',
+					url: '/replies',  
+					headers: {
+						"Content-Type": "application/json",
+						"X-HTTP-Method-Override": "POST"
+					},
+					dataType: 'text',
+					data: JSON.stringify({
+						bno: bno,  
+						replyer: replyer,
+						replytext: replytext
+					}),
+					success : function(result){
+						$('#replyer').val(""); /* 댓글 입력하면 창에 써놓은 글자 없어지게! */
+						$('#replytext').val("");
+					},
+					error : function(request,status,error){
+						console.log(error);
+					}
+					
+					
+				});
 			});
 
 			$('#reply_form').click(function(){   /* 이걸누르면 댓글 다는 mycollapse 폼 열렸다가 닫혔다가! */
