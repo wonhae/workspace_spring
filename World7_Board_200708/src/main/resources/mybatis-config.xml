@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  	
+  	<typeAliases>
+  		<package name="kr.co.domain"/>  <!-- typeAlias 귀찮으면 이거 쓰자!  -->
+  		<!-- <typeAlias alias="MemberDTO" type="kr.co.domain.MemberDTO"/> =>나중에 도메인을 하나씩 다 만들어야함 memberdto, boardvo 같은것들 --> 
+  	</typeAliases>
+  
+</configuration>

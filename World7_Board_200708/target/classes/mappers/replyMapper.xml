@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="r.e.p">
+
+	<delete id="delete">
+		delete from reply where rno =#{rno}
+	</delete>
+ 
+ 	<update id="update">
+ 		update reply set replytext = #{replytext}, updatedate =sysdate
+ 		where rno = #{rno}
+ 	</update>
+ 
+ 	<select id="list" resultType="ReplyVO">
+ 		select * from reply where bno = #{bno} order by rno desc  <!-- 최신댓글이 위로 올라오게. 요즘은 asc로도 많이하고, 추천많이 받은게 위에 가있기도한다. -->
+ 	</select>
+
+	<select id="getRno" resultType="Integer">
+		select NVL2(max(rno), max(rno)+1, 1) from reply
+	</select>
+	
+	<insert id="insert">  <!-- 현재 rno는 없다.  4개넣어야 하는데 3개넣는상황 1111에러. -->
+		insert into reply (rno, bno, replyer, replytext) values (#{rno},#{bno},#{replyer},#{replytext})
+	</insert>
+	
+</mapper>
