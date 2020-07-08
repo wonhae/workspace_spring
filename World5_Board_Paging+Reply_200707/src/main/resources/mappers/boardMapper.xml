@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="b.o.a">
+ 
+	<!-- c data: 중간에 실행되는것 막기 위해서 : sql 문이 길어진다. 짧아도 안정되게 하고싶다~ 할때 이걸로 묶어주기!  /   우리가 예전에 했던..sql문..긴거~~ reply root desc...... -->
+	<select id="test" resultType="BoardVO">
+		<![CDATA[ 
+		select * from (
+		select rownum rnum, bno, title, content, writer, viewCnt from 
+		(select * from board ]]>
+		
+		 <include refid="search"></include> 
+		
+			<![CDATA[ 
+		order by bno desc)		
+		) where rnum between #{startNum} and #{endNum}
+		]]>
+	</select>
+
+
+	<!--2번째 방법 가능한 이 방법을 사용하세요!   -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'writer'.toString()">
+				where lower(writer) like '%' || lower(#{keyword}) ||'%'
+			</if>
+			
+			<if test="searchType == 'title'.toString()">
+				where lower(title) like '%' || lower(#{keyword}) ||'%'
+			</if>
+			
+			<if test="searchType == 'content'.toString()">
+				where lower(content) like '%' || lower(#{keyword}) ||'%'
+			</if>
+		</if>
+	</sql>
+	 
+	<select id="searchlist" resultType="BoardVO">  
+		<![CDATA[ select * from board ]]><include refid="search"></include>
+	</select> 
+	
+	
+	
+	 <!-- 1번째 방법 -->
+	<!-- <select id="searchlist2" resultType="BoardVO">  앞뒤에 % 필요하다! / 동적으로 넣을때 #을 넣음. / 대소문자도 다 검색되게~  / $ { } 이건 보안에 취약. 다른 방법도 알려주신다고하심.
+		searchlist?searchType=writer&keyword=5  다 소문자로 만들어버려서 대소문자 구별 없애도록! 
+		select * from board where lower(${searchType}) like '%'|| lower(#{keyword}) ||'%'
+	</select>
+ -->
+	<select id="getAmount" resultType="Integer">
+		select count(bno) from board
+	</select>
+
+	<delete id="delete">
+		delete from board where bno = #{bno}
+	</delete>
+
+	<update id="update">
+		update board set title= #{title}, writer = #{writer} , content= #{content}, updateDate = sysdate where bno = #{bno}  <!--원래는 get update Date 임!   -->
+	</update>
+
+	<select id="updateui" resultType="BoardVO">
+		select * from board where bno = #{bno}
+	</select>
+
+	<update id="increaseViewcnt">
+		update board set viewcnt = viewcnt + 1 where bno = #{bno}
+	</update>
+
+	<select id="read" resultType="BoardVO">
+		select * from board where bno = #{bno}
+	</select>
+
+	<select id="list" resultType="BoardVO">  <!--////// List<BoardVO>여야할 것 같은데.. -->
+		select * from board order by bno desc
+	</select>
+
+	<select id="getBno" resultType="Integer">
+		select max(bno) from board
+	</select>
+	
+	<insert id="insert"> <!-- id = 매핑하는 메서드 넣기 -->
+		insert into board (bno, title, content, writer) 
+		values (#{bno},#{title},#{content},#{writer})  <!-- ?해당하는 갯수만큼 안채워줬다.  안채워줄 경우 부적합한 열 유형 1111 Error setting null for parameter#1이런식  -->
+	</insert>
+	
+	
+	
+</mapper>

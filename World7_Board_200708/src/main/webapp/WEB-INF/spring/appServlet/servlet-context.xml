@@ -22,6 +22,11 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 7/8추가 파일업로드 작업 springweb-multipart.commons-resolver-->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property value="1048760" name="maxUploadSize"></beans:property>
+	</beans:bean>
+	
 	<context:component-scan base-package="kr.co.ca" />
 	<context:component-scan base-package="com.naver.controller" />
 	<context:component-scan base-package="kr.or.controller" />
