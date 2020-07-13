@@ -14,7 +14,30 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src ="/resources/js/uploadfn.js" type="text/javascript"></script> <!-- originalname 쓰기위해 추가해주기!  -->
 <title>Insert title here</title>
+<style type="text/css">
+	.fileDrop{
+		width: 80%;
+		height: 200px;
+		border: 1px solid red;
+		margin: auto;
+	}
+	
+	.uploadedList {  
+		margin-top: 50px;
+	}
+	
+	.uploadedList li{  /* 왼쪽.. 한칸띄고 li :  자손 / 점없앰!  */
+		list-style: none; 
+	}
+	
+	.orifilename{
+		overflow: hidden;
+		white-space:nowrap;
+		text-overflow: ellipsis;
+	}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -42,7 +65,16 @@
 				<label for="content">내용</label>
 				<textarea  rows ="5" readonly value="${vo.content}" class="form-control">${vo.content }</textarea>
 			</div>
-		</div>
+			
+			<div class="form-group">  <!-- 7.13  -->
+				<label>첨부파일</label>
+				<ul class="uploadedList clearfix">
+				
+				</ul>
+			</div>
+			
+			
+		</div><!--class=row  -->
 		
 		<div class="row">
 			<div class="form-group">
@@ -131,6 +163,32 @@
 		getList(bno);  /* 7/7 댓글 무조건 실행되게! */
 
 		$(document).ready(function(){
+
+			$.getJSON("/getAttach/"+bno, function(arr){ /* 7.13   result는 배열일 것~~  */
+				console.log(arr);
+
+				for(var i = 0; i < arr.length; i++){
+					var str='<li class="col-xs-4">';
+					str += '<a href="/displayfile?filename='+getImageLink(arr[i])+'">';
+					if(checkImage(arr[i])){
+						str += '<img src="/displayfile?filename='+arr[i]+'"/>';
+					}else {
+						str += '<img src="/resources/show.png"/>'
+					}
+					str += '</a>'
+
+					str += '<p class="orifilename">';				
+					str += getOriginalName(arr[i]); 
+					str += '</p>'	
+					str += '</li>';
+					
+					$('.uploadedList').append(str);  
+				}
+				/* list.jsp에서 복붙  */
+				
+			});
+
+			
 		
 			/* 삭제! */
 			$('#replies').on("click",".replydelete",function(){

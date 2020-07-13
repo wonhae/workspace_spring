@@ -95,6 +95,12 @@
 	<select id="getId" resultType="Integer">
 		select NVL2(max(id), max(id)+1, 1) from attach
 	</select>
+	 
+	<select id="getAttach" resultType="string"> <!-- 소문자 string 쓸 것 -->
+		select fullname from attach where bno = #{bno} order by regdate asc 
+	</select>
+	
+	
 	
 	
 </mapper>

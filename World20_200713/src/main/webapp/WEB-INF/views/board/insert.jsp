@@ -11,9 +11,12 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  <!-- 온갓 함수들 다 가지고 있음.  -->
+<script 
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> <!-- collapse 이런거 해주게함 -->
+<script 
+	src="/resources/js/uploadfn.js" type="text/javascript"></script>	  <!-- 7.13 uploadfn.js 에 있는함수를 마음대로 이용할 수 있다! 다른곳에서 작업해놓은것을 jsp 파일에 적용할 수 있다!   -->
+
 <title>Insert title here</title>
 
 <style type="text/css">
@@ -22,6 +25,20 @@
 		height: 200px;
 		border: 1px solid red;
 		margin: auto;
+	}
+	
+	.uploadedList {  
+		margin-top: 50px;
+	}
+	
+	.uploadedList li{  /* 왼쪽.. 한칸띄고 li :  자손 / 점없앰!  */
+		list-style: none; 
+	}
+	
+	.orifilename{
+		overflow: hidden;
+		white-space:nowrap;
+		text-overflow: ellipsis;
 	}
 </style>
 
@@ -45,7 +62,7 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="content">내용</label>
+					<label for="content">내용</label> 
 					<textarea class="form-control" id="content" rows="5" name="content" ></textarea>
 				</div>				
 			</form>
@@ -53,9 +70,14 @@
 			
 			<!-- 7.13 -->
 			<div class="form-group">
-				<label>업로드할 파일을 드랍시키세요.</label>
+				<label>업로드할 파일을 드랍시키세요.</label> <!-- 7.13 썸네일 밑에 글자랑 아이콘이 오도록~~   -->
 				<div class="fileDrop"></div>
-				<ul class="uploadedList"></ul>  <!--div대신 ul로 하세요  -->
+				<ul class="uploadedList clearfix">  <!--clearfix 위로 침범하지 않도록/  col-xs-2 가장 작은애일때 왼쪽, 그거보다 커지면 오른쪽!! 생략해도 가능~ / 단말기가 커지면 커질수록 숫자가 작아진다   -->
+					<!-- <li class="col-xs-2"> 
+						<a href="#"><img src="/resources/show.png"></a>
+						<p class="orifilename"><a><span class="glyphicon glyphicon-trash"></span></a>오리지널네임.txt</p>
+					</li> -->
+				</ul>  <!--div대신 ul   ->밑에 li로 하세요  -->
 			</div>
 			
 			
@@ -74,7 +96,50 @@
 		$(document).ready(function(){
 
 
+			$('#insertbtn').click(function(event){  /* 7.13 등록버튼 누르면 정보 넘어가도록  */
+				event.preventDefault();
+				var str = '';
+				$('.deletefile').each(function(index){ /* 반복문 돌린다 */
+					str += "<input name='files["+index+"]' value='"+$(this).attr("href")+"' type='hidden'>";  /*this ->each(function(index)  */
+					
+				});
+
+				$('form').append(str);
+				$('form').submit();
+			});
+
+			$('#listbtn').click(function(){
+				location.assign("/board/list");
+			});
+			
+
+			/* 7.13 삭제되도록 */
+			 $('.uploadedList').on("click",".deletefile",function(event){
+				event.preventDefault();
+				var that = $(this);
+				$.ajax({
+					type: 'post',
+					url: '/deletefile',
+					dataType: 'text',
+					data: {
+						filename : that.attr("href")
+					},
+					success: function(result){
+						that.parent("p").parent("li").remove();
+					}
+				});
+			});
+
+
+
+			
+			
 			/* 7.13 uploadajax에서 복붙 */
+			$('.fileDrop').on("dragenter dragover", function(event){
+				event.preventDefault();
+			});
+			
+
 			$('.fileDrop').on("drop",function(event){
 				event.preventDefault();
 
@@ -92,33 +157,47 @@
 					processData : false,
 					contentType : false,
 					success : function(result){   
-						console.log(result); /* str="<div" 와 </a></div>는 짝이다!  */
-						var str ="<li><a href='/displayfile?filename="+getImageLink(result)+"'>";  /* href에 파일명 뿐 아니라 소스(예 이미지의 데이터)도 들어갈 수 있다.  */
-
-						if(checkImage(result)) {/* filename은 result에 있다.  */ /* 이미지일 경우! */
-							str += "<img src = '/displayfile?filename="+result+"'/>" /* 여기 썸네일이찍힌다!. 바로 파일명 쓰면 안된다. 이미지를 바이트형태로 만들어 str에 넣는다. 데이터를 서버에서 이미지 태그에 집어넣어줄수있다. 데이터자체를  */
+						/* console.log(result); /* str="<div" 와 </a></div>는 짝이다!  */
+						/*var str ="<li><a href='/displayfile?filename="+getImageLink(result)+"'>";
+						if(checkImage(result)) {
+							str += "<img src = '/displayfile?filename="+result+"'/>" 
 						}else {
-							str += "<img src ='/resources/show.png'/>"  /*  7.10  이미지 태그가 아닐경우 방금만든 show.png 들어간다. 나중에 소스값이 달라진다!   */
+							str += "<img src ='/resources/show.png'/>" 
 						}
-
+						str += getOriginalName(result);  
+						str += "</a><a class='deletefile' href='"+result+"'><span class='glyphicon glyphicon-trash'></span></a></li>"; 
+						*/
 						
-						str += getOriginalName(result);   /* result 가 파일명이었다.  */
-						str += "</a><a class='deletefile' href='"+result+"'><span class='glyphicon glyphicon-trash'></span></a></li>"; /* uri 가 적혀있는게 아니라 파일명이 적혀있다. 쓰레기통 아이콘누르면 삭제되게. 깜빡임없이.   */
+						var str='<li class="col-xs-4">';
+						str += '<a href="/displayfile?filename='+getImageLink(result)+'">';
+						if(checkImage(result)){
+							str += '<img src="/displayfile?filename='+result+'"/>';
+						}else {
+							str += '<img src="/resources/show.png"/>'
+						}
+						str += '</a>'
+
+						str += '<p class="orifilename">';
+						str += '<a href="'+result+'" class="deletefile"><span class="glyphicon glyphicon-trash"></span></a>' /* 누르면 사라지게 */
+						str += getOriginalName(result); 
+						str += '</p>'	
+						str += '</li>';
 						
 						$('.uploadedList').append(str);   /* 덮어씌우기가 아니라 추가! 덮어씌우면 하나 업로드 하면 문구뜨고~~~ / 기존것+새로운것 이어지게끔  */
 					},
 					error : function(request, status, error){
 						console.log(error)
 					}
-				});
+				
 			});
+		});
 
+		
+
+		
 
 			
-
-			$('#insertbtn').click(function(){
-				$('form').submit();
-			});
+			
 			
 		});
 	</script>

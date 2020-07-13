@@ -95,6 +95,8 @@
 			});
 		});
 
+		
+
 		function checkImage(filename) {  /* 이미지파일여부 */  /* filename은 result에 있다.  */
 			var idx = filename.lastIndexOf(".");
 			

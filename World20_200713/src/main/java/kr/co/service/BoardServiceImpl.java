@@ -68,6 +68,17 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.searchlist(searchType,keyword);
 	}
 
+	@Override
+	public List<String> getAttach(Integer bno) {
+		return bDao. getAttach(bno);
+	}
+
+	@Override  //7.13 시도 
+	public List<String> updateAttach(Integer bno) {
+		return bDao.updateAttach(bno);
+	}
+
+	
 	
 		
 	

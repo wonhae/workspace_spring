@@ -66,8 +66,8 @@
 				formData.append("file",file);
 
 				$.ajax({
-					type : 'get',
-					url : '/list',
+					type : 'post',
+					url : '/uploadajax',
 					dataType : 'text',
 					data : formData, 
 					processData : false,

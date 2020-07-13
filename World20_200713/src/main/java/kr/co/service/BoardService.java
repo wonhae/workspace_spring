@@ -23,6 +23,13 @@ public interface BoardService {
 
 	List<BoardVO> searchlist(String searchType, String keyword);
 
+	List<String> getAttach(Integer bno);
+
+	List<String> updateAttach(Integer bno);  //7.13 시도
+	
+
+
+
 
 
 	

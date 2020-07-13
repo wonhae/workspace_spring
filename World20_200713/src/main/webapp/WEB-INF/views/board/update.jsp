@@ -14,6 +14,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src ="/resources/js/uploadfn.js" type="text/javascript"></script> <!-- 7.13 시도..originalname 쓰기위해 추가해주기!  -->
 <title>Insert title here</title>
 </head>
 <body>
@@ -41,6 +42,13 @@
 					<textarea class="form-control" id="content" rows="5" name="content" >${vo.content}</textarea>
 				</div>
 				
+				<div class="form-group">  <!-- 7.13 시도 -->
+				<label>첨부파일</label>
+				<ul class="uploadedList clearfix">
+				
+				</ul>
+			</div>
+				
 			</form>
 			
 			<div clsss="form-group">
@@ -53,6 +61,9 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
+
+
+			
 			
 			$('#updatebtn').click(function(){
 				$('form').submit()
@@ -61,6 +72,35 @@
 			$('#listbtn').click(function(){
 				location.assign("/board/list")
 			});
+
+
+			/* 7.13 사진 update  시도 */
+			$.getJSON("/updateAttach/"+bno, function(arr){ 
+				console.log(arr);
+
+				for(var i = 0; i < arr.length; i++){
+					var str='<li class="col-xs-4">';
+					str += '<a href="/displayfile?filename='+getImageLink(arr[i])+'">';
+					if(checkImage(arr[i])){
+						str += '<img src="/displayfile?filename='+arr[i]+'"/>';
+					}else {
+						str += '<img src="/resources/show.png"/>'
+					}
+					str += '</a>'
+
+					str += '<p class="orifilename">';				
+					str += getOriginalName(arr[i]); 
+					str += '</p>'	
+					str += '</li>';
+					
+					$('.uploadedList').modify(str);  
+				}
+				/* list.jsp에서 복붙  */
+				
+			});
+			
+
+			
 		});
 	</script>
 	
