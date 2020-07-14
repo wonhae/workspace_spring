@@ -113,23 +113,10 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<String> getAttach(Integer bno) {   //////
-		return session.;
+	public List<String> getAttach(Integer bno) { 
+		return session.selectList(NS+".getAttach",bno);
 	}
 
-	@Override  //7.13 시도 
-	public List<String> updateAttach(Integer bno) {
-		Integer id = session.selectOne(NS+".getId");
-		Integer fullname = session.selectOne(NS+".getfullname");
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", id);
-		map.put("fullname", fullname);
-		map.put("bno", bno);
-		
-		session.insert(NS+".addAttatch", map);
-		return null;
-	}
 
 	
 

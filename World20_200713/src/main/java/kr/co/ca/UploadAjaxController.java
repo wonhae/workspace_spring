@@ -33,13 +33,7 @@ public class UploadAjaxController {
 	@Inject //7.13
 	private BoardService bService;
 	
-	@ResponseBody  // 시도 7.13
-	@RequestMapping(value="/updateAttach/{bno}", method = RequestMethod.GET )
-	public List<String> updateAttach (@PathVariable("bno") Integer bno){
-		
-		
-		return bService.updateAttach(bno);
-	}
+
 	
 	@ResponseBody  //7.13
 	@RequestMapping(value="/getAttach/{bno}", method = RequestMethod.GET )

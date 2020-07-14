@@ -73,12 +73,7 @@ public class BoardServiceImpl implements BoardService {
 		return bDao. getAttach(bno);
 	}
 
-	@Override  //7.13 시도 
-	public List<String> updateAttach(Integer bno) {
-		return bDao.updateAttach(bno);
-	}
 
-	
 	
 		
 	
