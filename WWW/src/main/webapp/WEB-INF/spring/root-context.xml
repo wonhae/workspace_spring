@@ -20,8 +20,8 @@
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property value="oracle.jdbc.driver.OracleDriver" name="driverClassName"></property>
 		<property value="jdbc:oracle:thin:@localhost:1521:xe" name="url"></property>
-		<property value="ca5" name="username"></property>
-		<property value="ca5" name="password"></property>
+		<property value="h1234" name="username"></property>
+		<property value="h1234" name="password"></property>
 	</bean>
 	
 	<!-- 마이바티스 주요 객체  sessionFactory클래스 빈등록 -->
@@ -39,7 +39,7 @@
 	
 	<!-- 컴포넌트 자동 스캔 명령/ 자동주입 명령을 사용하기 위해 위치를 알려줘야한다 -->
 	<context:component-scan base-package="kr.co.service" />  <!-- component-scan 통해서 객체가 된다.  -->
-	<context:component-scan base-package="kr.co.persistence" />
+	<context:component-scan base-package="kr.co.dao" />
 	
 		
 </beans>

@@ -1,5 +1,7 @@
 package kr.co.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,12 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public void insert(MemberVO vo) {
 		ss.insert(NS+".insert", vo);
+	}
+
+
+	@Override
+	public List<MemberVO> list() {
+		return ss.selectList(NS+".list");
 	}
 
 }

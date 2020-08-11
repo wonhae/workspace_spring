@@ -9,6 +9,10 @@
 	<insert id="insert">
 		insert into member(id,name,age) values (#{id},#{name},#{age})
 	</insert>
+	
+	<select id="list" resultType="MemberVO">
+		select * from member
+	</select>
 
 
 </mapper>

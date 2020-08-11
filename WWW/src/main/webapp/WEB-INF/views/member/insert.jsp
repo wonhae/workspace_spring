@@ -21,7 +21,10 @@
 	<h1>입력창</h1>
 
 	<form action="/member/insert" method="post">
-		ID : <input name="id"><br> password : <input name="pw">
+		ID : <input name="id"><br> 
+		Name : <input name="name"><br>
+		Age : <input name="age">
+		<input type="submit" value="등록">
 	</form>
 </body>
 </html>

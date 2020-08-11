@@ -1,5 +1,7 @@
 package kr.co.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +19,11 @@ public class MemberServiceImpl implements MemberService {
 	public void insert(MemberVO vo) {
 		dao.insert(vo);
 		
+	}
+
+	@Override
+	public List<MemberVO> list() {
+		return dao.list();
 	}
 
 }
